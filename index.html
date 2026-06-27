@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WeddingOS — María &amp; Javi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     CONFIGURACIÓN — https://script.google.com/macros/s/AKfycbzMHA5R2mF5ANGkRgsxQgS5kRBHWQ0SwFV0ZMEaOuwVQQkZ0vD3M2j5jeVAug5tq8yE8g/exec
+     ============================================================ */
+  :root{
+    --bg:#FAFAF8; --surface:#FFFFFF; --alt:#F5F4F1; --text:#1F1F1F; --mut:#6B6B6B;
+    --border:#ECEAE5; --accent:#B8916A; --soft:#B8916A1A; --ok:#3FAF65; --err:#E45858; --warn:#F6B44B;
+    --shadow:0 1px 2px rgba(31,31,31,.04),0 8px 24px rgba(31,31,31,.04);
+  }
+  .dark{
+    --bg:#141413; --surface:#1C1C1A; --alt:#232320; --text:#F3F1EC; --mut:#9A968C;
+    --border:#2C2C29; --accent:#C9A37C; --soft:#C9A37C1F; --ok:#4FBF75; --err:#E96B6B; --warn:#F6B44B;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:Inter,-apple-system,system-ui,sans-serif;
+    transition:background .3s,color .3s;-webkit-font-smoothing:antialiased}
+  ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:9px}
+  .tab{font-variant-numeric:tabular-nums}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .fade{animation:fade .35s}
+  @keyframes blink{0%,60%,100%{opacity:.3}30%{opacity:1}}
+
+  header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:12px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px}
+  .logo .mark{width:30px;height:30px;border-radius:9px;background:var(--accent);display:grid;
+    place-items:center;color:#fff;font-weight:700}
+  nav{display:flex;gap:2px;flex-wrap:wrap}
+  nav button{display:flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:10px;
+    font-size:13.5px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--mut);
+    font-family:inherit;transition:.15s}
+  nav button.active{background:var(--soft);color:var(--accent)}
+  .icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--surface);
+    cursor:pointer;display:grid;place-items:center;color:var(--mut)}
+  main{max-width:1040px;margin:0 auto;padding:24px 24px 80px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+  h1.page{font-size:24px;font-weight:600;letter-spacing:-.02em}
+  .sub{font-size:13.5px;color:var(--mut);margin-top:4px}
+  .pagehead{margin-bottom:18px}.pagehead .row{display:flex;align-items:center;gap:9px}
+
+  /* dashboard */
+  .hero{padding:32px;position:relative;overflow:hidden}
+  .hero .glow{position:absolute;top:-60px;right:-40px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle,var(--soft),transparent 70%)}
+  .hero h1{font-size:38px;font-weight:600;letter-spacing:-.03em;margin:8px 0 4px}
+  .eyebrow{display:flex;align-items:center;gap:8px;color:var(--accent);font-size:12px;font-weight:500;
+    text-transform:uppercase;letter-spacing:.08em}
+  .cd{display:flex;align-items:center;gap:6px}
+  .cd .u{min-width:54px;text-align:center}.cd .n{font-size:30px;font-weight:600;letter-spacing:-.03em}
+  .cd .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.12em}
+  .cd .sep{color:var(--border);font-size:22px}
+  .bar{height:8px;border-radius:99px;background:var(--alt);overflow:hidden;margin-top:7px}
+  .bar>span{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width 1s}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
+  .kpi{padding:17px}.kpi .ic{width:34px;height:34px;border-radius:9px;background:var(--soft);
+    display:grid;place-items:center;margin-bottom:12px}
+  .kpi .v{font-size:23px;font-weight:600;letter-spacing:-.02em}.kpi .l{font-size:12px;color:var(--mut);margin-top:2px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .hdr{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:14px;font-weight:600}
+  .hdr svg{color:var(--mut)}
+  .line{display:flex;justify-content:space-between;align-items:center;padding:9px 4px}
+  .line .s{font-size:12px;color:var(--mut)}
+  .badge{font-size:12px;font-weight:500;padding:3px 9px;border-radius:99px}
+
+  /* tablas */
+  .toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+  .searchbox{position:relative;flex:1;min-width:200px}
+  .searchbox svg{position:absolute;left:11px;top:10px;color:var(--mut)}
+  .searchbox input{width:100%;height:34px;padding:0 12px 0 33px;border-radius:10px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font-size:13px;outline:none;font-family:inherit}
+  select{height:34px;border-radius:10px;border:1px solid var(--border);background:var(--surface);
+    color:var(--text);font-size:13px;padding:0 10px;outline:none;font-family:inherit}
+  .pillinfo{display:flex;align-items:center;gap:6px;background:var(--soft);color:var(--accent);
+    padding:6px 12px;border-radius:10px;font-size:12px;font-weight:500}
+  table{width:100%;border-collapse:collapse}
+  thead tr{background:var(--alt);font-size:11px;text-transform:uppercase;color:var(--mut);text-align:left}
+  th{padding:11px 12px;font-weight:600}td{padding:8px 12px;font-size:13px;border-top:1px solid var(--border)}
+  .scroll{overflow-x:auto}
+  .editable{cursor:text;border-radius:6px;padding:4px 6px;min-height:24px;transition:background .12s}
+  .editable:hover{background:var(--alt)}
+  .editable input{width:100%;border:1px solid var(--accent);border-radius:6px;padding:3px 6px;
+    background:var(--alt);color:var(--text);font-size:13px;outline:none;font-family:inherit}
+  .pill{font-size:12px;font-weight:500;cursor:pointer;border:none;border-radius:99px;padding:4px 10px;font-family:inherit}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .proc{padding:20px}.proc h3{font-size:14px;font-weight:600}
+  .proc .r{display:flex;justify-content:space-between;margin-top:8px;font-size:13px}.proc .r .k{color:var(--mut)}
+  .warnpill{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:500;color:var(--warn);
+    background:color-mix(in srgb,var(--warn) 15%,transparent);padding:3px 8px;border-radius:99px}
+  .plan{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px}
+  .planc{min-width:230px;flex:1;padding:16px}
+  .planc.now{outline:2px solid var(--accent)}
+  .planc h3{font-size:14px;font-weight:600;text-transform:capitalize;margin-bottom:12px}
+  .planc li{display:flex;gap:8px;font-size:13px;list-style:none;margin-bottom:9px}
+  .dot{width:7px;height:7px;border-radius:99px;background:var(--accent);margin-top:5px;flex-shrink:0}
+
+  /* asistente */
+  .fab{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:16px;border:none;
+    cursor:pointer;background:var(--accent);box-shadow:var(--shadow);display:grid;place-items:center;z-index:40}
+  .chat{position:fixed;bottom:24px;right:24px;width:380px;max-width:calc(100vw - 32px);height:520px;
+    max-height:calc(100vh - 48px);z-index:40;display:flex;flex-direction:column;background:var(--surface);
+    border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .chat header{position:static;padding:14px 16px;background:none}
+  .chat .msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:85%;padding:10px 13px;border-radius:13px;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+  .msg.u{align-self:flex-end;background:var(--accent);color:#fff}
+  .msg.a{align-self:flex-start;background:var(--alt);color:var(--text)}
+  .chat .foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+  .chat .foot input{flex:1;border-radius:10px;border:1px solid var(--border);background:var(--alt);
+    color:var(--text);padding:9px 12px;font-size:13.5px;outline:none;font-family:inherit}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 8px}
+  .chips button{font-size:12px;color:var(--mut);background:var(--alt);border:1px solid var(--border);
+    border-radius:8px;padding:5px 9px;cursor:pointer;font-family:inherit}
+  .banner{background:var(--soft);color:var(--accent);font-size:12.5px;padding:10px 16px;text-align:center}
+  @media(max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="banner"></div>
+<header>
+  <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <div class="logo"><div class="mark">W</div>WeddingOS</div>
+    <nav id="nav"></nav>
+  </div>
+  <button class="icon-btn" id="theme" title="Tema">🌙</button>
+</header>
+<main id="app" class="fade"></main>
+<button class="fab" id="fab" title="Asistente">✨</button>
+
+<script>
+/* ============================================================
+   PASO 7: pega aquí la URL "/exec" de tu Apps Script, entre comillas.
+   Ejemplo: const API_URL = "https://script.google.com/macros/s/AKfy.../exec";
+   Si la dejas vacía (""), la app usa datos de ejemplo.
+   ============================================================ */
+const API_URL = "";
+
+/* ---------- datos de ejemplo (si no hay API_URL) ---------- */
+const DEMO = {
+  couple:"María & Javi", place:"Segovia", weddingDate:"2026-10-17T13:00:00",
+  guestTarget:260, confirmedPax:127,
+  guests:[
+    {id:"2",category:"Familia novia",name:"María Salcedo",confirmed:true,adults:2,youth:0,kids:0,allergies:"—",busChurch:true,busReturn:true,table:"1"},
+    {id:"3",category:"Amigos",name:"Begoña Ruibal",confirmed:true,adults:1,youth:0,kids:0,allergies:"Piña",busChurch:true,busReturn:true,table:"—"},
+    {id:"4",category:"Amigos",name:"Sergio González",confirmed:true,adults:1,youth:0,kids:0,allergies:"Marisco/crustáceos",busChurch:false,busReturn:false,table:"—"},
+    {id:"5",category:"Familia novio",name:"Gonzalo García-Lomas",confirmed:true,adults:2,youth:0,kids:0,allergies:"—",busChurch:true,busReturn:true,table:"2"},
+    {id:"6",category:"Amigos",name:"Clara Muguiro",confirmed:true,adults:1,youth:0,kids:0,allergies:"Gluten, lactosa",busChurch:true,busReturn:true,table:"5"},
+    {id:"7",category:"Familia novia",name:"Lourdes Villanueva",confirmed:false,adults:0,youth:0,kids:0,allergies:"—",busChurch:false,busReturn:false,table:"—"}
+  ],
+  expenses:[
+    {id:"2",category:"Finca",vendor:"Finca El Roble",cost:18000,paid:10000,status:"En curso"},
+    {id:"3",category:"Catering",vendor:"Catering La Mesa",cost:16500,paid:7000,status:"En curso"},
+    {id:"4",category:"Foto/Vídeo",vendor:"Estudio Alma Foto",cost:4800,paid:4800,status:"Pagado"},
+    {id:"5",category:"Música",vendor:"DJ KinderLomas",cost:3200,paid:1600,status:"En curso"},
+    {id:"6",category:"Flores",vendor:"Floristería Lavanda",cost:2600,paid:0,status:"Pendiente"}
+  ],
+  procedures:[
+    {id:"2",document:"Capitulaciones matrimoniales",timing:"2-3 meses",expires:"No",handling:"Notaría"},
+    {id:"3",document:"Expediente matrimonial",timing:"1-2 meses",expires:"Sí (6 meses)",handling:"Registro Civil"},
+    {id:"4",document:"Reserva parroquia",timing:"Inmediato",expires:"No",handling:"Hecho"}
+  ],
+  dashboard:[
+    {concept:"Finca",status:"Cerrado"},{concept:"Catering",status:"Cerrado"},
+    {concept:"Fotografía",status:"Cerrado"},{concept:"Flores",status:"En curso"},
+    {concept:"Transporte",status:"Pendiente"}
+  ],
+  workPlan:[
+    {month:"Julio",tasks:["Cerrar minuta catering","Reservar transporte"]},
+    {month:"Agosto",tasks:["Prueba de vestido","Confirmar flores"]},
+    {month:"Septiembre",tasks:["Cerrar timing del día","Plano de mesas"]},
+    {month:"Octubre",tasks:["Confirmaciones finales","Pagos pendientes"]}
+  ]
+};
+
+/* ---------- estado ---------- */
+let DATA = DEMO, TAB = "dash";
+const eur = n => new Intl.NumberFormat("es-ES",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+const $ = s => document.querySelector(s);
+
+/* ---------- carga de datos vía JSONP (esquiva CORS) ---------- */
+function loadData(){
+  if(!API_URL){ banner("Mostrando datos de ejemplo. Pega tu URL de Apps Script en el archivo (paso 7) para ver tu Sheet real."); render(); return; }
+  const cb = "wos_"+Date.now();
+  window[cb] = function(d){ DATA = d; delete window[cb]; s.remove(); banner(""); render(); };
+  const s = document.createElement("script");
+  s.src = API_URL + "?action=snapshot&callback=" + cb;
+  s.onerror = ()=>{ banner("No se pudo conectar con el Sheet. Revisa la URL y que el despliegue sea público."); render(); };
+  document.body.appendChild(s);
+}
+function banner(t){ $("#banner").innerHTML = t ? '<div class="banner">'+t+'</div>' : ''; }
+
+/* ---------- escritura (POST) ---------- */
+function saveCell(resource,id,field,value){
+  if(!API_URL) return; // en demo no guarda
+  fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify({action:"update",resource,id,field,value})}).catch(()=>{});
+}
+
+/* ---------- iconos (inline SVG) ---------- */
+const I = {
+  dash:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>',
+  users:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>',
+  wallet:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>',
+  file:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
+  clock:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+  bus:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6M16 6v6M2 12h19.6M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2V8c0-1-1-2-2-2H4c-1 0-2 1-2 2v6c0 .4 0 .8.2 1.2.3 1.1.8 2.8.8 2.8h3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',
+  card:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>',
+  cal:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
+  search:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+  build:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/></svg>',
+  check:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>',
+  warn:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></svg>'
+};
+
+/* ---------- nav + tema ---------- */
+const TABS = [["dash","Dashboard",I.dash],["guests","Invitados",I.users],["exp","Gastos",I.wallet],["proc","Trámites",I.file],["plan","Plan",I.clock]];
+function renderNav(){
+  $("#nav").innerHTML = TABS.map(([id,l,ic])=>`<button class="${TAB===id?'active':''}" data-tab="${id}">${ic}${l}</button>`).join("");
+  document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>{TAB=b.dataset.tab;renderNav();render();});
+}
+$("#theme").onclick = ()=>{document.body.classList.toggle("dark");$("#theme").textContent=document.body.classList.contains("dark")?"☀️":"🌙";};
+
+/* ---------- countdown ---------- */
+function cd(){const diff=Math.max(0,new Date(DATA.weddingDate)-Date.now());
+  return{d:Math.floor(diff/864e5),h:Math.floor(diff%864e5/36e5),m:Math.floor(diff%36e5/6e4),s:Math.floor(diff%6e4/1e3)};}
+
+/* ---------- render principal ---------- */
+function render(){
+  const a=$("#app"); a.classList.remove("fade"); void a.offsetWidth; a.classList.add("fade");
+  if(TAB==="dash") a.innerHTML=viewDash();
+  else if(TAB==="guests") a.innerHTML=viewGuests();
+  else if(TAB==="exp") a.innerHTML=viewExp();
+  else if(TAB==="proc") a.innerHTML=viewProc();
+  else if(TAB==="plan") a.innerHTML=viewPlan();
+  wire();
+}
+
+function badge(s){const ok=/cerrad|pagad|hecho/i.test(s),pe=/curso|pendiente/i.test(s);
+  const c=ok?'var(--ok)':pe?'var(--warn)':'var(--accent)';
+  return `<span class="badge" style="color:${c};background:color-mix(in srgb,${c} 18%,transparent)">${s||'—'}</span>`;}
+
+function viewDash(){
+  const t=cd();const conf=DATA.guests.filter(g=>g.confirmed);
+  const total=DATA.expenses.reduce((s,e)=>s+e.cost,0),paid=DATA.expenses.reduce((s,e)=>s+e.paid,0);
+  const pax=DATA.confirmedPax||conf.reduce((s,g)=>s+g.adults+g.youth+g.kids,0);
+  const busCh=conf.filter(g=>g.busChurch).reduce((s,g)=>s+g.adults+g.youth+g.kids,0);
+  const busRe=conf.filter(g=>g.busReturn).reduce((s,g)=>s+g.adults+g.youth+g.kids,0);
+  const closed=DATA.dashboard.filter(d=>/cerrad/i.test(d.status)).length;
+  const prog=DATA.dashboard.length?Math.round(closed/DATA.dashboard.length*100):0;
+  const u=(n,l)=>`<div class="u"><div class="n tab">${String(n).padStart(2,'0')}</div><div class="l">${l}</div></div>`;
+  const kpi=(ic,l,v)=>`<div class="card kpi"><div class="ic">${ic}</div><div class="v tab">${v}</div><div class="l">${l}</div></div>`;
+  return `
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div class="card hero"><div class="glow"></div>
+      <div style="position:relative;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px">
+        <div><div class="eyebrow">${I.cal} 17 octubre 2026 · ${DATA.place}</div>
+          <h1>${DATA.couple}</h1>
+          <p class="sub">Faltan <b style="color:var(--text)">${t.d} días</b> · boda cerrada al <b style="color:var(--text)">${prog}%</b></p></div>
+        <div class="cd">${u(t.d,'días')}<span class="sep">:</span>${u(t.h,'hrs')}<span class="sep">:</span>${u(t.m,'min')}<span class="sep">:</span>${u(t.s,'seg')}</div>
+      </div>
+      <div style="margin-top:24px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-bottom:0">
+        <span>Progreso de la organización</span><span>${prog}%</span></div>
+        <div class="bar"><span style="width:${prog}%"></span></div></div>
+    </div>
+    <div class="kpis">
+      ${kpi(I.users,`Confirmados (máx ${DATA.guestTarget})`,pax)}
+      ${kpi(I.wallet,"Gastado",Math.round(paid/total*100)+"%")}
+      ${kpi(I.card,"Pendiente",eur(total-paid))}
+      ${kpi(I.bus,"Bus igl./vta.",busCh+"/"+busRe)}
+      ${kpi(I.build,"Proveedores",DATA.expenses.length)}
+      ${kpi(I.check,"Coste/pax",eur(Math.round(paid/(pax||1))))}
+    </div>
+    <div class="two">
+      <div class="card" style="padding:22px"><div class="hdr">${I.card} Pagos pendientes</div>
+        ${DATA.expenses.filter(e=>e.cost>e.paid).map(e=>`<div class="line"><div><div style="font-weight:500">${e.vendor}</div><div class="s">${e.category} · ${e.status}</div></div><div class="tab" style="font-weight:600">${eur(e.cost-e.paid)}</div></div>`).join("")}</div>
+      <div class="card" style="padding:22px"><div class="hdr">${I.file} Estado de la boda</div>
+        ${DATA.dashboard.map(d=>`<div class="line"><span>${d.concept}</span>${badge(d.status)}</div>`).join("")}</div>
+    </div>
+  </div>`;
+}
+
+function viewGuests(){
+  const conf=DATA.guests.filter(g=>g.confirmed);
+  const ad=conf.reduce((s,g)=>s+g.adults,0);
+  const busCh=conf.filter(g=>g.busChurch).reduce((s,g)=>s+g.adults+g.youth+g.kids,0);
+  const busRe=conf.filter(g=>g.busReturn).reduce((s,g)=>s+g.adults+g.youth+g.kids,0);
+  const cats=["Todas",...new Set(DATA.guests.map(g=>g.category))];
+  const pax=DATA.confirmedPax;
+  return `
+  <div class="pagehead"><div class="row">${I.users}<h1 class="page">Invitados</h1></div>
+    <p class="sub">${pax} pax confirmados de ${DATA.guestTarget} · ${ad} adultos</p></div>
+  <div class="toolbar">
+    <div class="searchbox">${I.search}<input id="gq" placeholder="Buscar invitado…"></div>
+    <select id="gcat">${cats.map(c=>`<option>${c}</option>`).join("")}</select>
+    <div class="pillinfo">${I.bus} Bus: ${busCh} iglesia · ${busRe} vuelta</div>
+  </div>
+  <div class="card scroll"><table id="gtable"><thead><tr>
+    <th>Categoría</th><th>Nombre</th><th>Conf.</th><th>Ad.</th><th>Alergias</th><th>Bus igl.</th><th>Bus vta.</th><th>Mesa</th>
+  </tr></thead><tbody id="gbody"></tbody></table></div>
+  <p class="sub" style="margin-top:10px">Toca las píldoras Sí/No para alternar; toca un texto para editarlo. ${API_URL?'Cada cambio se guarda en tu Sheet.':'(En modo ejemplo no se guarda.)'}</p>`;
+}
+
+function viewExp(){
+  const total=DATA.expenses.reduce((s,e)=>s+e.cost,0),paid=DATA.expenses.reduce((s,e)=>s+e.paid,0);
+  return `
+  <div class="pagehead"><div class="row">${I.wallet}<h1 class="page">Gastos</h1></div>
+    <p class="sub">${eur(paid)} pagado de ${eur(total)} · ${eur(total-paid)} pendiente</p></div>
+  <div class="card scroll"><table><thead><tr>
+    <th>Categoría</th><th>Proveedor</th><th style="text-align:right">Coste</th><th style="text-align:right">Pagado</th>
+    <th style="text-align:right">Pendiente</th><th style="text-align:right">% total</th><th>Estado</th>
+  </tr></thead><tbody>
+  ${DATA.expenses.map(e=>{const pend=e.cost-e.paid,pct=Math.round(e.cost/total*100);
+    return `<tr>
+      <td style="color:var(--mut)">${e.category}</td><td style="font-weight:500">${e.vendor}</td>
+      <td class="tab" style="text-align:right" data-edit="expenses|${e.id}|cost">${eur(e.cost)}</td>
+      <td class="tab" style="text-align:right" data-edit="expenses|${e.id}|paid">${eur(e.paid)}</td>
+      <td class="tab" style="text-align:right;color:${pend>0?'var(--warn)':'var(--ok)'};font-weight:500">${eur(pend)}</td>
+      <td class="tab" style="text-align:right;color:var(--mut)">${pct}%</td>
+      <td>${badge(e.status)}</td></tr>`;}).join("")}
+  </tbody><tfoot><tr style="background:var(--alt);font-weight:600">
+    <td style="border:none">Total</td><td style="border:none"></td>
+    <td class="tab" style="text-align:right;border:none">${eur(total)}</td>
+    <td class="tab" style="text-align:right;border:none;color:var(--ok)">${eur(paid)}</td>
+    <td class="tab" style="text-align:right;border:none;color:var(--warn)">${eur(total-paid)}</td>
+    <td style="border:none"></td><td style="border:none"></td></tr></tfoot></table></div>`;
+}
+
+function viewProc(){
+  return `
+  <div class="pagehead"><div class="row">${I.file}<h1 class="page">Trámites</h1></div>
+    <p class="sub">${DATA.procedures.length} gestiones de la boda</p></div>
+  <div class="cards-grid">
+  ${DATA.procedures.map(p=>{const cad=/sí|si/i.test(p.expires)&&!/^no$/i.test((p.expires||"").trim());
+    return `<div class="card proc">
+      <div style="display:flex;justify-content:space-between;gap:12px"><h3>${p.document}</h3>
+        ${cad?`<span class="warnpill">${I.warn} Caduca</span>`:''}</div>
+      <div class="r"><span class="k">Tiempos</span><span>${p.timing||'—'}</span></div>
+      <div class="r"><span class="k">¿Caduca?</span><span>${p.expires||'—'}</span></div>
+      <div class="r"><span class="k">Gestión</span><span>${p.handling||'—'}</span></div></div>`;}).join("")}
+  </div>`;
+}
+
+function viewPlan(){
+  const cur=new Date().toLocaleDateString("es-ES",{month:"long"});
+  return `
+  <div class="pagehead"><div class="row">${I.clock}<h1 class="page">Plan de trabajo</h1></div>
+    <p class="sub">Tareas mes a mes hasta la boda</p></div>
+  <div class="plan">
+  ${DATA.workPlan.map(m=>{const now=m.month.toLowerCase()===cur.toLowerCase();
+    return `<div class="card planc ${now?'now':''}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h3>${m.month}</h3>${now?'<span style="font-size:10px;font-weight:500;text-transform:uppercase;color:var(--accent);background:var(--soft);padding:2px 8px;border-radius:99px">Ahora</span>':''}</div>
+      <ul>${m.tasks.map(t=>`<li><span class="dot"></span><span>${t}</span></li>`).join("")||'<li style="color:var(--mut)">Sin tareas</li>'}</ul></div>`;}).join("")}
+  </div>`;
+}
+
+/* ---------- interacciones (búsqueda, edición, toggles) ---------- */
+function wire(){
+  if(TAB==="guests"){
+    const render=()=>{
+      const q=($("#gq").value||"").toLowerCase();const cat=$("#gcat").value;
+      const rows=DATA.guests.filter(g=>g.name.toLowerCase().includes(q)&&(cat==="Todas"||g.category===cat));
+      $("#gbody").innerHTML=rows.map(g=>`<tr>
+        <td data-edit="guests|${g.id}|category" style="color:var(--mut)">${g.category}</td>
+        <td data-edit="guests|${g.id}|name" style="font-weight:500">${g.name}</td>
+        <td><button class="pill" data-toggle="${g.id}|confirmed" style="background:${g.confirmed?'color-mix(in srgb,var(--ok) 15%,transparent)':'var(--alt)'};color:${g.confirmed?'var(--ok)':'var(--mut)'}">${g.confirmed?'Sí':'No'}</button></td>
+        <td class="tab" data-edit="guests|${g.id}|adults">${g.adults}</td>
+        <td data-edit="guests|${g.id}|allergies" style="color:var(--mut)">${g.allergies}</td>
+        <td><button class="pill" data-toggle="${g.id}|busChurch" style="background:${g.busChurch?'color-mix(in srgb,var(--ok) 15%,transparent)':'var(--alt)'};color:${g.busChurch?'var(--ok)':'var(--mut)'}">${g.busChurch?'Sí':'No'}</button></td>
+        <td><button class="pill" data-toggle="${g.id}|busReturn" style="background:${g.busReturn?'color-mix(in srgb,var(--ok) 15%,transparent)':'var(--alt)'};color:${g.busReturn?'var(--ok)':'var(--mut)'}">${g.busReturn?'Sí':'No'}</button></td>
+        <td class="tab" data-edit="guests|${g.id}|table">${g.table}</td></tr>`).join("");
+      bindEdits();bindToggles();
+    };
+    $("#gq").oninput=render;$("#gcat").onchange=render;render();
+  } else { bindEdits(); }
+}
+
+function bindToggles(){
+  document.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>{
+    const [id,field]=b.dataset.toggle.split("|");
+    const g=DATA.guests.find(x=>x.id===id); g[field]=!g[field];
+    saveCell("guests",id,field,g[field]?"Sí":"No"); render();
+  });
+}
+
+function bindEdits(){
+  document.querySelectorAll("[data-edit]").forEach(td=>{
+    td.classList.add("editable");
+    td.onclick=()=>{
+      if(td.querySelector("input"))return;
+      const [res,id,field]=td.dataset.edit.split("|");
+      const item=(res==="guests"?DATA.guests:DATA.expenses).find(x=>x.id===id);
+      const raw=item[field];
+      const inp=document.createElement("input");
+      inp.value=typeof raw==="number"?raw:raw;
+      if(typeof raw==="number")inp.type="number";
+      td.innerHTML="";td.appendChild(inp);inp.focus();
+      const commit=()=>{
+        let val=inp.value;if(typeof raw==="number")val=Number(val);
+        item[field]=val; saveCell(res,id,field,val); render();
+      };
+      inp.onblur=commit;
+      inp.onkeydown=e=>{if(e.key==="Enter")commit();if(e.key==="Escape")render();};
+    };
+  });
+}
+
+/* ---------- asistente IA ---------- */
+let chatMsgs=[{role:"assistant",content:"Hola Javi. Puedo decirte cuánto queda por pagar, el coste por pax, qué vence… ¿Qué necesitas?"}];
+let chatOpen=false;
+$("#fab").onclick=()=>toggleChat(true);
+function toggleChat(open){
+  chatOpen=open;
+  $("#fab").style.display=open?"none":"grid";
+  let box=$("#chat"); if(box)box.remove();
+  if(!open)return;
+  box=document.createElement("div");box.className="chat";box.id="chat";
+  box.innerHTML=`<header><div class="logo" style="font-size:14px"><div class="mark" style="width:28px;height:28px;background:var(--soft);color:var(--accent)">✨</div>Asistente</div>
+    <button class="icon-btn" id="chatclose" style="width:30px;height:30px;border:none;background:none">✕</button></header>
+    <div class="msgs" id="cmsgs"></div>
+    <div class="chips" id="cchips"></div>
+    <div class="foot"><input id="cinput" placeholder="Pregunta lo que quieras…"><button class="icon-btn" id="csend" style="width:38px;background:var(--accent);border:none;color:#fff">➤</button></div>`;
+  document.body.appendChild(box);
+  $("#chatclose").onclick=()=>toggleChat(false);
+  $("#csend").onclick=sendChat;
+  $("#cinput").onkeydown=e=>{if(e.key==="Enter")sendChat();};
+  drawMsgs();
+}
+function drawMsgs(){
+  $("#cmsgs").innerHTML=chatMsgs.map(m=>`<div class="msg ${m.role==='user'?'u':'a'}">${m.content}</div>`).join("");
+  const chips=$("#cchips");
+  if(chatMsgs.length<=1){chips.innerHTML=["¿Cuánto queda por pagar?","Coste por pax","¿Qué trámites caducan?"].map(c=>`<button>${c}</button>`).join("");
+    chips.querySelectorAll("button").forEach(b=>b.onclick=()=>{$("#cinput").value=b.textContent;sendChat();});}
+  else chips.innerHTML="";
+  $("#cmsgs").scrollTop=$("#cmsgs").scrollHeight;
+}
+function sendChat(){
+  const inp=$("#cinput");const text=(inp.value||"").trim();if(!text)return;
+  chatMsgs.push({role:"user",content:text});inp.value="";drawMsgs();
+  if(!API_URL){chatMsgs.push({role:"assistant",content:"El asistente funciona cuando conectas tu Apps Script (paso 7). Ahora estás en modo ejemplo."});drawMsgs();return;}
+  $("#cmsgs").innerHTML+=`<div class="msg a" id="typing">···</div>`;
+  fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain"},
+    body:JSON.stringify({action:"chat",messages:chatMsgs})})
+    .then(r=>r.json()).then(d=>{chatMsgs.push({role:"assistant",content:d.text||"No he podido responder."});drawMsgs();})
+    .catch(()=>{chatMsgs.push({role:"assistant",content:"Error de conexión."});drawMsgs();});
+}
+
+/* ---------- arranque ---------- */
+renderNav();
+loadData();
+setInterval(()=>{if(TAB==="dash")render();},1000); // countdown vivo
+</script>
+</body>
+</html>
